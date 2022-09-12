@@ -1,0 +1,55 @@
+.playlist {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #000000;
+  color: azure;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.searchbar {
+  position: absolute;
+  right: 5%;
+  top: 10%;
+  padding: 0%;
+}
+
+.search {
+  background-color: rgba(0, 0, 0, 0);
+  padding-inline: 20px;
+  /* padding-block: 10px; */
+  color: white;
+  font-size: x-large;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid rgb(255, 255, 255);
+  width: 150px;
+}
+
+.search:focus {
+  border-bottom: 2px solid rgb(255, 255, 255);
+}
+
+.play_lists {
+  position: absolute;
+  top: 20%;
+  left: 0%;
+  width: 100%;
+  align-items: flex-end;
+  padding: 50px;
+}
+
+th {
+  width: 200px;
+  text-align: left;
+  padding: 20px;
+}
+
+td {
+  background-color: azure;
+  border-color: aliceblue;
+  color: #000000;
+  padding: 20px;
+  margin: 10px;
+}
