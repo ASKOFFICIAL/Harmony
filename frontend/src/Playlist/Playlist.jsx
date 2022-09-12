@@ -14,7 +14,7 @@ const Playlist = () => {
         </form>
       </div>
       <div className="tables">
-        <table className="play_lists">
+        <table className="play_lists" >
           <tr className="heading">
             <th>Serial Number</th>
             <th>Playlist Name</th>
