@@ -8,15 +8,15 @@ return (
             <div class="container">
             <a href="#">
               <h1 class="logo">
-                <img src="./images/Harmony_logo.jpeg" alt="logo" class="logo" width="40"/>
+                <img src="./images/Harmony_logo.png" alt="logo" class="logo" width="40"/>
               </h1>
             </a>
           
               <nav>
                 <ul>
                   <li><a href="#">Home</a></li>
-                  <li><a href="#">What it is</a></li>
-                  <li><a href="#">Who we are</a></li>
+                  <li><a href="#section2">What it is</a></li>
+                  <li><a href="#section3">Who we are</a></li>
                   <li class="login_but">
                         <button class="btn btn1" onclick="location.href='#'">Login</button>
                   </li>
