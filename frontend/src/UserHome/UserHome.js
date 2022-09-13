@@ -114,7 +114,7 @@ const UserHome = () => {
         </Grid>
       </Grid>
 
-      <footer id="play-controls">
+      <div id="play-controls">
         <div>
           <SkipPrevious className="play-controls-icon" fontSize="large" />
           {isPlaying
@@ -128,7 +128,7 @@ const UserHome = () => {
           <img src="./images/spotify-sample-cover.png" alt="Spotify thumbnail" id="play-controls-thumbnail" />
           <div>
             <Typography variant="h5" >All I Want</Typography>
-            <Typography>Kodaline</Typography>
+            <Typography variant="p">Kodaline</Typography>
           </div>
         </div>
         <div>
@@ -147,7 +147,7 @@ const UserHome = () => {
           : <ArrowDropUp className="play-controls-icon" fontSize="large" onClick={ () => toggleDisplayPlaylist() } />
           }
         </div>
-      </footer>
+      </div>
     </>
   );
 };
