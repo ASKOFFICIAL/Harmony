@@ -167,19 +167,39 @@ p{
   margin-top: 60px;
   text-align: center;
   justify-content: center;
-  width: 100%;
+  width: 50%;
 }
 #divimg{
     width: 100%;
     background-color: rgb(0, 0, 0);
     margin-top: 45px;
-    text-align: center;
+    /* text-align: center; */
 }
+#memories{
+  position: absolute;
+  top:1200px;
+  right:200px;
+  animation: textanim 0.8s infinite ;
+  animation-direction:alternate ;
+  animation-timing-function: linear;
+}
+@keyframes textanim {
+  from{color: #ccc;font-size: 79px;}
+  to{color: #fff;font-size: 80px;}
 
+}
+#line{
+width:50%;
+background-color: rgb(162, 162, 162);
+height: 3px;
+display: inline-block;
+margin-bottom: 74px;
+z-index: 10;
+}
 #divimg  img{
-  width: 100%;
-  height: 55% ;
-  -webkit-filter: invert(1);
+width: 50%;
+height: 55% ;
+-webkit-filter: invert(1);
   filter: invert(1);
   
 }
@@ -213,7 +233,8 @@ footer{
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column
+  flex-direction: column;
+  margin-top:130px
 }
 
 footer .icons,
@@ -322,87 +343,3 @@ footer .wave#wave5{
     }
 }
 
-
-.anim-sequence .anim1 {
-  animation: key-focus 3s infinite;
-}
-.anim-sequence .anim3 {
-  animation: key-focus 3s infinite 0.25s;
-}
-.anim-sequence .anim5 {
-  animation: key-focus 3s infinite 0.5s;
-}
-.anim-sequence .anim6 {
-  animation: key-focus 3s infinite 0.75s;
-}
-.anim-sequence .anim8 {
-  animation: key-focus 3s infinite 1s;
-}
-.anim-sequence .anim10 {
-  animation: key-focus 3s infinite 1.25s;
-}
-.anim-sequence .anim12 {
-  animation: key-focus 3s infinite 1.5s;
-}
-.pianocontainer1{
-  float: left; 
-  transform: rotate(90deg);
-  margin-top: 230px;
-  left:0
-}
-.pianocontainer2{
-  float: right; 
-  transform: rotate(270deg);
-  margin-top: 230px;
-  left:0;
-  -webkit-filter: invert(1);
-  filter: invert(1);
-}
-.pianocontainer > p {
-  text-align: center;
-}
-.keyboard {
-  display: flex;
-  justify-content: center;
-}
-.key {
-  display: inline-block;
-  position: relative;
-}
-.key:not(.black) {
-  width: 60px;
-  height: 425px;
-  margin-right: -1px;
-  border: 1px solid #333;
-  background-color: white;
-  z-index: 1;
-}
-.key.black {
-  width: 0;
-  height: 0;
-  left: -20px;
-  z-index: 2;
-}
-.key.black > div {
-  top: -10px;
-  width: 40px;
-  height: 300px;
-  background-color: black;
-  border: 1px solid #333;
-}
-@keyframes key-focus {
-  25% {
-    background-color: rgba(167, 224, 255, 0.93);
- }
-  50% {
-    background-color: #ccc;
- }
-}
-@keyframes key-black-focus {
-  25% {
-    background-color: #6a6;
- }
-  50% {
-    background-color: #555;
- }
-}

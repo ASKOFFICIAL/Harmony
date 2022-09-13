@@ -40,74 +40,25 @@ return (
             What it is
           </h2>
           <p>
-            Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it ove
-            000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin
-            words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the un
+            Brick-like Phones have turned slimmer than wallets, Internet has become super fast but for some reason I can never find the perfect
+            playlist for my mood. Enter, Harmony. Our website takes an input of your preferred start mood and end mood to find the ideal playlist for you.
+            Our in house ML Model uses these moods and goes through our large library of music to arrange a symphony made just for your ears
           </p>
         </div>
-        {/* <div class="pianocontainer1" style="">
-          <div class="keyboard anim-sequence">
-            <div class="key anim1"></div>
-            <div class="key black">
-              <div class="anim2"></div>
-            </div>
-            <div class="key anim3"></div>
-            <div class="key black">
-              <div class="anim4"></div>
-            </div>
-            <div class="key anim5"></div>
-            <div class="key anim6"></div>
-            <div class="key black">
-              <div class="anim7"></div>
-            </div>
-            <div class="key anim8"></div>
-            <div class="key black">
-              <div class="anim9"></div>
-            </div>
-            <div class="key anim10"></div>
-            <div class="key black">
-              <div class="anim11"></div>
-            </div>
-            <div class="key anim12"></div>
-          </div>
-        </div>
-        <div class="pianocontainer2" style="">
-          <div class="keyboard anim-sequence">
-            <div class="key anim1"></div>
-            <div class="key black">
-              <div class="anim2"></div>
-            </div>
-            <div class="key anim3"></div>
-            <div class="key black">
-              <div class="anim4"></div>
-            </div>
-            <div class="key anim5"></div>
-            <div class="key anim6"></div>
-            <div class="key black">
-              <div class="anim7"></div>
-            </div>
-            <div class="key anim8"></div>
-            <div class="key black">
-              <div class="anim9"></div>
-            </div>
-            <div class="key anim10"></div>
-            <div class="key black">
-              <div class="anim11"></div>
-            </div>
-            <div class="key anim12"></div>
-          </div>
-        </div> */}
         <div id="divimg">
-        <img src="./images/piano.webp" alt="" />
+        <img src="./images/piano.jpg" alt="" />
+        <h2 id="memories">
+            Make Memories <br/>with Music
+          </h2>
+        <div id="line"></div>
       </div>
         <div id="section3">
           <h2>
             Who we are
           </h2>
           <p>
-            Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it ove
-            000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin
-            words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the un
+           In Short we're Young, Motivated Engineers hoping to make your day just a little happier. Pursuing our Engineering from VIT Vellore
+           and hoping to get 100s in our Project Review 😳😳, We bring this product to you and hope you like it
           </p>
         </div>
         <div class="footerr">
