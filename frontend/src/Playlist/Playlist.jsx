@@ -1,10 +1,12 @@
 import React from "react";
 import "./Playlist.css";
 import Search_icon from "./Search_icon.svg";
+import Navbar from "../Navbar/Navbar";
 
 const Playlist = () => {
   return (
     <div className="playlist">
+      <Navbar/>
       <div className="searchbar">
         <form>
           <label>
@@ -13,8 +15,8 @@ const Playlist = () => {
           <input className="search" type="text" />
         </form>
       </div>
-      <div className="tables">
-        <table className="play_lists" >
+      <div className="tables container">
+        <table className="play_lists">
           <tr className="heading">
             <th>Serial Number</th>
             <th>Playlist Name</th>
@@ -22,26 +24,17 @@ const Playlist = () => {
             <th>Date Added</th>
           </tr>
           <tr className="contents">
-            <td>Serial Number</td>
-            <td>Playlist Name</td>
-            <td>Autdor</td>
-            <td>Date Added</td>
+            <td colSpan={4}> &nbsp;A </td>
           </tr>
-          <br/>
+          <br />
           <tr className="contents">
-            <td>Serial Number</td>
-            <td>Playlist Name</td>
-            <td>Autdor</td>
-            <td>Date Added</td>
+            <td colSpan={4}> - </td>
           </tr>
-          <br/>
+          <br />
           <tr className="contents">
-            <td>Serial Number</td>
-            <td>Playlist Name</td>
-            <td>Autdor</td>
-            <td>Date Added</td>
+            <td colSpan={4}> - </td>
           </tr>
-          <br/>
+          <br />
         </table>
       </div>
     </div>

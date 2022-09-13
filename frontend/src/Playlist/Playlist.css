@@ -11,7 +11,7 @@
 .searchbar {
   position: absolute;
   right: 5%;
-  top: 10%;
+  top: 15%;
   padding: 0%;
 }
 
@@ -33,17 +33,23 @@
 
 .play_lists {
   position: absolute;
-  top: 20%;
+  top: 23%;
   left: 0%;
   width: 100%;
   align-items: flex-end;
   padding: 50px;
 }
 
+
+
 th {
   width: 200px;
   text-align: left;
   padding: 20px;
+}
+
+table {
+  border: none;
 }
 
 td {
@@ -54,7 +60,6 @@ td {
   margin: 10px;
 }
 
-tr{
-    border: none;
-
+tr {
+  border: none;
 }
