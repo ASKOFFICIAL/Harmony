@@ -177,9 +177,9 @@ p{
 }
 
 #divimg  img{
-width: 100%;
-height: 55% ;`
--webkit-filter: invert(1);
+  width: 100%;
+  height: 55% ;
+  -webkit-filter: invert(1);
   filter: invert(1);
   
 }
@@ -356,7 +356,6 @@ footer .wave#wave5{
   margin-top: 230px;
   left:0;
   -webkit-filter: invert(1);
-
   filter: invert(1);
 }
 .pianocontainer > p {
