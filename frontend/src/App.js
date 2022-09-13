@@ -1,9 +1,16 @@
 import './App.css';
-import UserHome from './user_home/UserHome'
-
+import Home from "./Home/Home"
+import Song from "./Song/Song"
+import Playlist from './Playlist/Playlist';
+import UserHome from './UserHome/UserHome';
 function App() {
   return (
-    <UserHome />
+    <>
+      <Home />
+      <Song />
+      <Playlist />
+      <UserHome />
+    </>
   );
 }
 
