@@ -1,22 +1,24 @@
 import './Home.css'
 import {Facebook,LinkedIn,GitHub,Mail} from '@mui/icons-material';
+import { Link } from 'react-router-dom';
+
 const Home=()=>{
 
 return (
     <>
     <header>
             <div class="container">
-            <a href="#">
+            <Link to='/'>
               <h1 class="logo">
                 <img src="./images/Harmony_logo.jpeg" alt="logo" class="logo" width="40"/>
               </h1>
-            </a>
+            </Link>
           
               <nav>
                 <ul>
-                  <li><a href="#">Home</a></li>
-                  <li><a href="#">What it is</a></li>
-                  <li><a href="#">Who we are</a></li>
+                  <li><Link to='/'>Home</Link></li>
+                  <li><a href="#section2">What it is</a></li>
+                  <li><a href="#section3">Who we are</a></li>
                   <li class="login_but">
                         <button class="btn btn1" onclick="location.href='#'">Login</button>
                   </li>
