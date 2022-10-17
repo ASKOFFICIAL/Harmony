@@ -3,6 +3,7 @@ import Home from "./Home/Home"
 import Song from "./Song/Song"
 import Playlist from './Playlist/Playlist';
 import UserHome from './UserHome/UserHome';
+import Navbar from './Navbar/Navbar';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {

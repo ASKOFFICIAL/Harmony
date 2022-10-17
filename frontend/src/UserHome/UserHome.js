@@ -1,8 +1,8 @@
 import "./UserHome.css";
 import { useState } from 'react'
 import { Container, Grid, Typography, Box, Paper, Fab, Slide, Slider } from "@mui/material";
-import { PlayArrow, Pause, SkipNext, SkipPrevious, VolumeUp,
-  Repeat, Shuffle, ArrowDropUp, ArrowDropDown } from "@mui/icons-material";
+import { PlayArrow, Pause, SkipNext, SkipPrevious, VolumeUp, Repeat, Shuffle, ArrowDropUp, ArrowDropDown } from "@mui/icons-material";
+import Navbar from '../Navbar/Navbar'
 
 const UserHome = () => {
   const [isStart, setIsStart] = useState(true);
@@ -16,9 +16,11 @@ const UserHome = () => {
   const toggleDisplayPlaylist = () => { setDisplayPlaylist(!displayPlaylist) }
   // const toggleDisplayVolumeSlider = () => { setDisplayVolumeSlider(!displayVolumeSlider) }
   // const handleChange = (event, newVolume) => { setVolume(newVolume) }
+  // const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   return (
     <>
+      <Navbar />
       <Grid container spacing={2} id="welcome" alignItems="center">
         <Grid item xs={8}>
           <Typography variant="h3" fontWeight="bold">
@@ -114,7 +116,7 @@ const UserHome = () => {
         </Grid>
       </Grid>
 
-      <div id="play-controls">
+      <div id="play-controls" onClick={ () => window.location.href="/song" }>
         <div>
           <SkipPrevious className="play-controls-icon" fontSize="large" />
           {isPlaying

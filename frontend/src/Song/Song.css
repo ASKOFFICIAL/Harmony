@@ -30,8 +30,8 @@ body {
 
 h2{
     color: #fff;
-    font-family: 'Product Sans';
-    font-size: 50px;
+    /* font-family: 'Product Sans'; */
+    /* font-size: 50px; */
     margin-block-start: 0.3em;
     margin-block-end: 0em;
 
@@ -39,8 +39,8 @@ h2{
 
 p {
     color: #fff;
-    font-family: 'Product Sans';
-    font-size: 20px;
+    /* font-family: 'Product Sans'; */
+    /* font-size: 20px; */
     margin-block-start: 0.001em;
     margin-block-end: 0em;
 }
