@@ -1,0 +1,159 @@
+body {
+    background-color: black;
+}
+
+#main {
+    display: flex;
+    flex-direction: column;
+}
+
+#main-music {
+    display: flex;
+}
+
+#music {
+    display: flex;
+    flex-direction: column;
+    margin-left: 50px;
+    margin-top: 120px;
+    color: #fff;
+    font-family: "Product Sans";
+}
+
+#cover img {
+    /* position: absolute; */
+    width: 300px;
+    height: 300px;
+    border-radius: 30px;
+    margin-block-end: 2.0em;
+}
+
+h2{
+    color: #fff;
+    /* font-family: 'Product Sans'; */
+    /* font-size: 50px; */
+    margin-block-start: 0.3em;
+    margin-block-end: 0em;
+
+}
+
+p {
+    color: #fff;
+    /* font-family: 'Product Sans'; */
+    /* font-size: 20px; */
+    margin-block-start: 0.001em;
+    margin-block-end: 0em;
+}
+
+#music_name {
+    display: flex;
+    flex-direction: column;
+}
+
+#user-seeker-controls {
+    margin-top: 50px;
+    padding: 0 25px;
+}
+
+.seeker {
+    width: 100%;
+  }
+  /* The slider itself */
+  /* .slider { */
+    /* -webkit-appearance: none;  Override default CSS styles */
+    /* appearance: none; */
+    /* width: 100%; Full-width */
+    /* height: 3px; Specified height */
+    /* background: #fff; Grey background */
+    /* outline: none; Remove outline */
+    /* opacity: 0.7; Set transparency (for mouse-over effects on hover) */
+    /* -webkit-transition: .2s; 0.2 seconds transition on hover */
+    /* transition: opacity .2s; */
+  /* } */
+  
+  /* Mouse-over effects */
+  /* .slider:hover { */
+    /* opacity: 1; Fully shown on mouse-over */
+  /* } */
+/*   
+  
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none; 
+    appearance: none;
+    width: 10px; 
+    height: 10px; 
+    background: #fff; 
+    cursor: pointer; 
+    border-radius: 50%;
+    border: #000;
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 25px; 
+    height: 25px; 
+    background: #04AA6D; 
+    cursor: pointer; 
+  }
+
+  #time_info {
+    color: #fff;
+    width: 250px;
+    height: 5px;
+    margin: auto;
+    font-size: 12px;
+    padding-top: 2px;
+    margin-top: 50px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  #time_passed {
+    float: left;
+
+  }
+  #time_left {
+    float: right;
+  }  */
+
+  #options_bar{
+    width: 100%;
+    font-size: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+  }
+/* 
+  #options_bar #left {
+    float: left;
+  }
+
+  #options_bar #right {
+    margin-right: 75px;
+    float: right;
+  }
+
+  #options_bar i {
+    margin: 0px 15px 0px 15px;
+  }
+
+  .fa-heart-o {
+    color: white;
+    cursor: pointer;
+  }
+  
+  .fa-heart {
+    color: red;
+    cursor: pointer;
+  }
+  
+  #center{
+    margin-left: 500px;
+  } */
+
+  #user-controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+  }
