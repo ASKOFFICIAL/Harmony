@@ -15,7 +15,7 @@ const Home = () => {
         </div>
         <div>
           <h2>Harmony.</h2>
-          <p id="class-subtext">Certified Mood Raiser</p>
+          <p id="className-subtext">Certified Mood Raiser</p>
         </div>
 
       </div>
@@ -45,22 +45,22 @@ const Home = () => {
           and hoping to get 100s in our Project Review 😳😳, We bring this product to you and hope you like it
         </p>
       </div>
-      <div class="footerr">
+      <div className="footerr">
         <footer>
-          <div class="animated">
-            <div class="wave" id="wave1"></div>
-            <div class="wave" id="wave2" ></div>
-            <div class="wave" id="wave3"></div>
-            <div class="wave" id="wave4"></div>
-            <div class="wave" id="wave5"></div>
+          <div className="animated">
+            <div className="wave" id="wave1"></div>
+            <div className="wave" id="wave2" ></div>
+            <div className="wave" id="wave3"></div>
+            <div className="wave" id="wave4"></div>
+            <div className="wave" id="wave5"></div>
           </div>
-          <ul class="icons">
+          <ul className="icons">
             <li><a href="#"> <Facebook /> </a> </li>
             <li><a href="#"> <LinkedIn /> </a></li>
             <li><a href="#"> <GitHub /> </a></li>
             <li><a href="#"> <Mail /> </a></li>
           </ul>
-          <ul class="timeline">
+          <ul className="timeline">
             <li><a href="#">Home </a></li>
             <li><a href="#section3">About</a></li>
             <li><a href="#">Use Spotify</a></li>
