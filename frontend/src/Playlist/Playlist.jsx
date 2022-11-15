@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import "./Playlist.css";
 import Search_icon from "./Search_icon.svg";
 import Navbar from "../Navbar/Navbar";
@@ -6,7 +6,7 @@ import Navbar from "../Navbar/Navbar";
 const Playlist = () => {
   return (
     <div className="playlist">
-      <Navbar/>
+      <Navbar />
       <div className="searchbar">
         <form>
           <label>

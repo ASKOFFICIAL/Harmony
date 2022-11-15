@@ -1,20 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { AccountCircle, EventNote } from "@mui/icons-material";
-import axiosInstance from '../utils/axiosInstance';
-// import axios from 'axios';
-// import randomstring from 'randomstring';
-
+import axiosInstance from "../utils/axiosInstance";
+import { useLogin } from '../utils/LoginContext';
 import "./Navbar.css";
 
 const Navbar = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const { loggedIn, setLoggedIn, data } = useLogin();
+    const logOut = () => {};
 
-    const logOut = () => {
-        setIsLoggedIn(false);
-    };
     const logIn = () => {
-        setIsLoggedIn(true);
+        axiosInstance.get("/user/login").then((res) => {
+            window.location.replace(res.data);
+        })
     };
 
     return (
@@ -22,7 +19,7 @@ const Navbar = () => {
             <Link to="/">
                 <h1 className="logo">
                     <img
-                        src="./images/Harmony_logo.png"
+                        src="images/Harmony_logo.png"
                         alt="logo"
                         className="logo"
                         width="40"
@@ -32,42 +29,29 @@ const Navbar = () => {
 
             <nav>
                 <ul>
-                    {isLoggedIn ? (
+                    {loggedIn ? (
                         <>
+                            <li><Link to="/userhome">Home</Link></li>
+                            <li><Link to="/playlists">Playlists</Link></li>
                             <li>
-                                <Link to="/userhome">Home</Link>
-                            </li>
-                            <li>
-                                <Link to="/playlists">Playlists</Link>
-                            </li>
-                            <li>
-                                <AccountCircle
-                                    fontSize="large"
-                                    onClick={(e) => {
-                                        window.location.href = "/";
-                                        logOut();
-                                    }}
+                                <img
+                                    // src="/images/Harmony_logo.png"
+                                    src={data.images[0].url}
+                                    className="profile-pic"
+                                    width="40"
                                 />
                             </li>
                         </>
                     ) : (
                         <>
-                            <li>
-                                <Link to="/">Home</Link>
-                            </li>
-                            <li>
-                                <a href="#section2">What it is</a>
-                            </li>
-                            <li>
-                                <a href="#section3">Who we are</a>
-                            </li>
+                            <li><Link to="/">Home</Link></li>
+                            <li><a href="#section2">What it is</a></li>
+                            <li><a href="#section3">Who we are</a></li>
                             <li className="login_but">
                                 <button
                                     className="btn btn1"
                                     onClick={() => {
-                                        // window.location.href="/userhome"
-                                        // logIn()
-                                        axiosInstance.get("/user/login").then((res) => console.log(res))
+                                        logIn();
                                     }}
                                 >
                                     Login
