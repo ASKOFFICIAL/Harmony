@@ -11,6 +11,7 @@ const logIn = async (req, res) => {
 
         const data = qs.stringify({ "grant_type": "client_credentials" })
         const response = await axios.post('https://accounts.spotify.com/api/token', data, { headers: headers })
+        console.log(response)
 
         res.status(200).json({ data: response.data.access_token })
     } catch (err) { res.status(500).json({ data: err }) }
