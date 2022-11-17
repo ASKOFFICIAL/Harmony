@@ -3,7 +3,11 @@ import "./Playlist.css";
 import Search_icon from "./Search_icon.svg";
 import Navbar from "../Navbar/Navbar";
 
+import { useLogin } from '../utils/LoginContext';
+
 const Playlist = () => {
+  const { data } = useLogin();
+
   return (
     <div className="playlist">
       <Navbar />
@@ -17,24 +21,24 @@ const Playlist = () => {
       </div>
       <div className="tables container">
         <table className="play_lists">
-          <tr className="heading">
-            <th>Serial Number</th>
-            <th>Playlist Name</th>
-            <th>Author</th>
-            <th>Date Added</th>
-          </tr>
-          <tr className="contents">
-            <td colSpan={4}> &nbsp;A </td>
-          </tr>
-          <br />
-          <tr className="contents">
-            <td colSpan={4}> - </td>
-          </tr>
-          <br />
-          <tr className="contents">
-            <td colSpan={4}> - </td>
-          </tr>
-          <br />
+          <thead className="heading">
+            <tr>
+              <th>Serial Number</th>
+              <th>Playlist Name</th>
+              <th>Author</th>
+              {/* <th>Date Added</th> */}
+            </tr>
+          </thead>
+          <tbody>
+            {data && data.items.map(playlist => {
+              <tr className="contents">
+                <td>{playlist.id}</td>
+                <td>{playlist.name}</td>
+                <td>{playlist.owner.display_name}</td>
+                {/* <td>{playlist.}</td> */}
+              </tr>
+            })}
+          </tbody>
         </table>
       </div>
     </div>

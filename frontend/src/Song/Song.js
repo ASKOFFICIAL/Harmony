@@ -1,9 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FavoriteBorder, Favorite, PlayArrow, Pause, SkipNext, SkipPrevious, Loop, Shuffle, QueueMusic } from '@mui/icons-material';
 import { Slider, Box, Typography } from '@mui/material';
 import "./Song.css";
+import axiosInstance from '../utils/axiosInstance';
+import { useLogin } from '../utils/LoginContext';
 
 const Song = () => {
+    const { data } = useLogin();
+
+    useEffect(() => {
+        axiosInstance.post('/song/play', { songURI: data?.topTrack.uri });
+    }, []);
+
     const [isLiked, setIsLiked] = useState(false)
     const [isPlaying, setIsPlaying] = useState(true)
     const [position, setPosition] = useState(0)

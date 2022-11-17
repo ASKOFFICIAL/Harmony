@@ -1,19 +1,73 @@
 const dotenv = require('dotenv').config();
-const axios = require('axios');
-const qs = require('qs');
+const SpotifyWebApi = require('spotify-web-api-node');
+var SpotifyApi = require('spotify-web-api-node');
+
+var spotifyApi = new SpotifyApi({
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    redirectUri: "http://localhost:3000"
+})
+
+const scopes = ["user-read-private", "user-read-email", "playlist-read-private", "user-top-read", "user-modify-playback-state", "streaming", "user-read-playback-state"]
 
 const logIn = async (req, res) => {
-    try {
-        const headers = {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Basic ' + Buffer.from(`${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`, 'utf-8').toString('base64')
-        }
-
-        const data = qs.stringify({ "grant_type": "client_credentials" })
-        const response = await axios.post('https://accounts.spotify.com/api/token', data, { headers: headers })
-
-        res.status(200).json({ data: response.data.access_token })
-    } catch (err) { res.status(500).json({ data: err }) }
+    const html = spotifyApi.createAuthorizeURL(scopes)
+    res.send(html+"&show_dialog=true")
 }
 
-module.exports = { logIn };
+const handleCallback = async (req, res) => {
+    const { code } = req.body;
+
+    try {
+        var data = await spotifyApi.authorizationCodeGrant(code)
+        const { access_token, refresh_token, expires_in } = data.body;
+        spotifyApi.setAccessToken(access_token)
+        spotifyApi.setRefreshToken(refresh_token)
+
+        res.status(200).send({ access_token, refresh_token, expires_in });
+    } catch(err) {
+        res.json(err)
+    }
+}
+
+const getDetails = async (req, res) => {
+    var result = {}
+    try {
+        // console.log('test')
+        var userDetails = await spotifyApi.getMe()
+        result = Object.assign({}, result, userDetails.body)
+        // console.log('test1')
+        var playlists = ((await spotifyApi.getUserPlaylists()).body.items).sort(() => 0.5 - Math.random())
+        result = Object.assign({}, result, { items: playlists.splice(0, 4) })
+        // console.log('test2')
+        var topTracks = ((await spotifyApi.getMyTopTracks({ time_range: "short_term" })).body.items)
+        result = Object.assign({}, result, { topTrack: topTracks[0] })
+        // console.log('test')
+        // console.log(result)
+        // result = Object.assign({}, result, { 
+        //     access_token: spotifyApi.getAccessToken(), 
+        //     refresh_token: spotifyApi.getRefreshToken() 
+        // })
+        // console.log(result)
+        // console.log(spotifyApi)
+        res.status(200).send(result)
+    } catch (err) {
+        res.status(400).send(err)
+    }
+}
+
+const handleRefreshToken = (req, res) => {
+    try {
+        spotifyApi.refreshAccessToken().then((data) => {
+            spotifyApi.setAccessToken(data.body['access_token'])
+            
+            const { access_token, expires_in } = data.body;
+            res.status(200).send({ access_token, expires_in })
+        })
+    } catch (err) {
+        res.status(500).send(err)
+    }
+}
+
+module.exports = { logIn, handleCallback, getDetails, handleRefreshToken };
+module.exports.spotifyApi = spotifyApi;

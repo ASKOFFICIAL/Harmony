@@ -43,23 +43,23 @@ body {
 }
 
 #play-controls {
-    background-color: white;
+    /* background-color: white; */
     position: fixed;
     bottom: 0;
     width: 100%;
     z-index: 9999;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    color: black;
+    /* display: flex; */
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    /* padding: 10px 0; */
+    /* color: black; */
 }
 
 /* .play-controls-icon {
     color: black;
 } */
 
-#play-controls-song {
+/* #play-controls-song {
     display: flex;
     align-items: center;
 }
@@ -70,12 +70,12 @@ body {
     background-color: #d3d3d3;
     border-radius: 7px;
     margin-right: 10px;
-}
+} */
 
-#play-controls div div {
+/* #play-controls div div {
     display: flex;
     flex-direction: column;
-}
+} */
 
 /* #play-controls div {
     display: flex;

@@ -1,41 +1,46 @@
 import "./UserHome.css";
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Container, Grid, Typography, Box, Paper, Fab, Slide, Slider } from "@mui/material";
-import { PlayArrow, Pause, SkipNext, SkipPrevious, VolumeUp, Repeat, Shuffle, ArrowDropUp, ArrowDropDown } from "@mui/icons-material";
+import { PlayArrow, Pause, SkipNext, SkipPrevious, VolumeUp, Repeat, Shuffle, ArrowDropUp, ArrowDropDown, ConstructionOutlined, GpsFixed } from "@mui/icons-material";
 import Navbar from '../Navbar/Navbar';
 import axiosInstance from '../utils/axiosInstance';
 import { BounceLoader } from 'react-spinners';
 import { useLogin } from '../utils/LoginContext';
+import { Link } from 'react-router-dom'
+import SpotifyPlayer from 'react-spotify-web-playback';
+// import { WebPlaybackSDK, useSpotifyPlayer, usePlayerDevice } from 'react-spotify-web-playback-sdk'; 
 
 const UserHome = () => {
   // const [userData, setUserData] = useState();
-  const { setLoggedIn, data, setData } = useLogin(); 
+  const { loggedIn, data, accessToken } = useLogin();
   const [isStart, setIsStart] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
   // const [displayVolumeSlider, setDisplayVolumeSlider] = useState(false);
   // const [volume, setVolume] = useState(30);
   const [displayPlaylist, setDisplayPlaylist] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
+  // const [isLoading, setIsLoading] = useState(false)
 
-  useEffect(() => {
-    axiosInstance('/user/details').then((res) => {
-      // setUserData(res.data)
-      setData(res.data)
-    })
-  }, [])
+  // useEffect(() => {
+  //   axiosInstance('/user/details')
+  //     .then((res) => {
+  //       // setUserData(res.data)
+  //       setData(res.data)
+  //     })
+  // }, [])
   
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false)
-      setLoggedIn(true)
-      console.log(data)
+  // useEffect(() => {
+    // setTimeout(() => {
+      // setIsLoading(false)
+    //   setLoggedIn(true)
+    //   console.log(data)
+      
       // console.log(data)
       // console.log(userData)
       // {userData.items.map(playlist => {
       //   console.log(playlist.images[0].url)
       // })}
-    }, 3000)
-  }, [data])
+    // }, 3000)
+  // }, [data])
 
   const toggleStart = () => { setIsStart(!isStart) }
   const togglePlay = () => { setIsPlaying(!isPlaying) }
@@ -66,16 +71,14 @@ const UserHome = () => {
       }
   }
 
-
   return (
     <>
-    {isLoading ? 
+    {!loggedIn ? 
       <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", margin: "0px", padding: "0"}}>
         <BounceLoader color="#36d7b7"/>
       </div>
       :
       <>
-        <Navbar />
         <Grid container spacing={2} id="welcome" alignItems="center">
           <Grid item xs={8}>
             <Typography variant="h3" fontWeight="bold">
@@ -96,10 +99,14 @@ const UserHome = () => {
               Feel like listening to one of your playlists?
             </Typography>
           </Grid>
-          {data && data.items.map((playlist) => {
-            <Grid item xs={3} pl={7}>
-              <img src={playlist.images[0].url} className="playlist-thumbnail" />
-            </Grid>
+          {data.items.map((playlist) => {
+            console.log(playlist)
+            return (
+              <Grid item xs={3} pl={7}>
+                <img src={playlist.images[0].url} className="playlist-thumbnail" />
+                <h5 style={{padding: "0"}}>{playlist.name}</h5>
+              </Grid>
+            )
           })}
         </Grid>
 
@@ -132,40 +139,52 @@ const UserHome = () => {
           </Grid>
         </Grid>
 
-        <div id="play-controls" onClick={ () => window.location.href="/song" }>
-          <div>
-            <SkipPrevious className="play-controls-icon" fontSize="large" />
-            {isPlaying
-            ? <Pause className="play-controls-icon" fontSize="large" onClick={ () => togglePlay() } />
-            : <PlayArrow className="play-controls-icon" fontSize="large" onClick={ () => togglePlay() } /> 
-            }
-            <SkipNext className="play-controls-icon" fontSize="large" />
-          </div>
-          <div id="play-controls-song">
-            {/* <Box id="play-controls-thumbnail" /> */}
-            <img src="./images/spotify-sample-cover.png" alt="Spotify thumbnail" id="play-controls-thumbnail" />
-            <div>
-              <Typography variant="h5" >All I Want</Typography>
-              <Typography variant="p">Kodaline</Typography>
-            </div>
-          </div>
-          <div>
-            {/* {displayVolumeSlider
-            ? <Slider aria-label="volume" value={volume} onChange={handleChange} />
-            : <></>
-            }
-            <VolumeUp id="volume" className="play-controls-icon" fontSize="large"
-              onMouseEnter={ () => { toggleDisplayVolumeSlider() }}
-              onMouseLeave={ () => { toggleDisplayVolumeSlider() }}
-            /> */}
-            <Repeat className="play-controls-icon" fontSize="large" />
-            <Shuffle className="play-controls-icon" fontSize="large" />
-            {displayPlaylist
-            ? <ArrowDropDown className="play-controls-icon" fontSize="large" onClick={ () => toggleDisplayPlaylist() } />
-            : <ArrowDropUp className="play-controls-icon" fontSize="large" onClick={ () => toggleDisplayPlaylist() } />
-            }
-          </div>
+
+        {/* <MyPlayer /> */}
+        {/* <Link to="/song"> */}
+        <div id="play-controls">
+          <SpotifyPlayer
+            token={accessToken}
+            autoPlay
+            uris={["spotify:track:0fBSs3fRoh1yJcne77fdu9"]}
+            // id="play-controls"
+          />
         </div>
+          {/* <div id="play-controls">
+            <div>
+              <SkipPrevious className="play-controls-icon" fontSize="large" />
+              {isPlaying
+              ? <Pause className="play-controls-icon" fontSize="large" onClick={ () => togglePlay() } />
+              : <PlayArrow className="play-controls-icon" fontSize="large" onClick={ () => togglePlay() } /> 
+              }
+              <SkipNext className="play-controls-icon" fontSize="large" />
+            </div>
+            <div id="play-controls-song">
+              {/* <Box id="play-controls-thumbnail" /> */}
+              {/* <img src="./images/spotify-sample-cover.png" alt="Spotify thumbnail" id="play-controls-thumbnail" />
+              <div>
+                <Typography variant="h5" >All I Want</Typography>
+                <Typography variant="p">Kodaline</Typography>
+              </div>
+            </div>
+            <div> */}
+              {/* {displayVolumeSlider
+              ? <Slider aria-label="volume" value={volume} onChange={handleChange} />
+              : <></>
+              }
+              <VolumeUp id="volume" className="play-controls-icon" fontSize="large"
+                onMouseEnter={ () => { toggleDisplayVolumeSlider() }}
+                onMouseLeave={ () => { toggleDisplayVolumeSlider() }}
+              /> */}
+              {/* <Repeat className="play-controls-icon" fontSize="large" />
+              <Shuffle className="play-controls-icon" fontSize="large" />
+              {displayPlaylist
+              ? <ArrowDropDown className="play-controls-icon" fontSize="large" onClick={ () => toggleDisplayPlaylist() } />
+              : <ArrowDropUp className="play-controls-icon" fontSize="large" onClick={ () => toggleDisplayPlaylist() } />
+              }
+            </div>
+          </div> */}
+        {/* </Link> */}
       </>
     }
     </>
