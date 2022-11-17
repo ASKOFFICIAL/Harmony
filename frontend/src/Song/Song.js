@@ -32,7 +32,7 @@ const Song = () => {
                 </div>
             </div>
             <div id="user-seeker-controls">
-                <div class="seeker">
+                <div className="seeker">
                     <Slider
                         aria-label="time-indicator"
                         size="small"

@@ -1,11 +1,14 @@
 import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 import Home from "./Home/Home"
 import Song from "./Song/Song"
 import Playlist from './Playlist/Playlist';
 import UserHome from './UserHome/UserHome';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from './Navbar/Navbar';
 
 function App() {
+
   return (
     <>
       <Router>
