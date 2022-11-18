@@ -22,7 +22,7 @@ const UserHome = () => {
       // setUserData(res.data)
       setData(res.data)
     })
-  }, [])
+  }, [setData])
   
   useEffect(() => {
     setTimeout(() => {
@@ -35,7 +35,7 @@ const UserHome = () => {
       //   console.log(playlist.images[0].url)
       // })}
     }, 3000)
-  }, [data])
+  }, [data, setLoggedIn])
 
   const toggleStart = () => { setIsStart(!isStart) }
   const togglePlay = () => { setIsPlaying(!isPlaying) }
