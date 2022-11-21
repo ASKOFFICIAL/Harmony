@@ -3,11 +3,9 @@ from numpy.linalg import norm
 import random
 import pandas as pd
 
-
-#
-df = pd.read_csv("valence_arousal_dataset.csv")
-df["mood_vec"] = df[["valence", "energy"]].values.tolist()
-def recommend(val,energy, ref_df, sp, n_recs = 5):
+# df = pd.read_csv("valence_arousal_dataset.csv")
+def recommend(val,energy, ref_df):
+    ref_df["mood_vec"] = ref_df[["valence", "energy"]].values.tolist()
     
     # Crawl valence and arousal of given track from spotify api
     featurevector = np.array([val, energy])
@@ -18,4 +16,4 @@ def recommend(val,energy, ref_df, sp, n_recs = 5):
     ref_df_sorted = ref_df.sort_values(by = "distances", ascending = True)
     
     # Return n recommendations
-    return ref_df_sorted.iloc[:n_recs]
+    return ref_df_sorted.iloc[0]
