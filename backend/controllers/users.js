@@ -1,7 +1,8 @@
 const dotenv = require('dotenv').config();
 const SpotifyWebApi = require('spotify-web-api-node');
+const User = require('../models/User');
 
-var spotifyApi = new SpotifyApi({
+var spotifyApi = new SpotifyWebApi({
     clientId: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
     redirectUri: "http://localhost:3000"
@@ -32,7 +33,6 @@ const handleCallback = async (req, res) => {
 const getDetails = async (req, res) => {
     var result = {}
     try {
-        // console.log('test')
         var userDetails = await spotifyApi.getMe()
         result = Object.assign({}, result, userDetails.body)
         // console.log('test1')
@@ -43,12 +43,28 @@ const getDetails = async (req, res) => {
         result = Object.assign({}, result, { topTrack: topTracks[0] })
         // console.log('test')
         // console.log(result)
-        // result = Object.assign({}, result, { 
-        //     access_token: spotifyApi.getAccessToken(), 
-        //     refresh_token: spotifyApi.getRefreshToken() 
-        // })
+        result = Object.assign({}, result, { 
+            access_token: spotifyApi.getAccessToken(), 
+            refresh_token: spotifyApi.getRefreshToken() 
+        })
         // console.log(result)
         // console.log(spotifyApi)
+
+        const check = await User.findOne({ id: result.id })
+        console.log(check)
+        if (!check) {
+            const user = new User({ id: result.id })
+
+            user
+            .save()
+            .then(() => {
+                console.log("User added");
+            })
+            .catch((err) => {
+                res.status(500).send({ message: err.message });
+            });
+        } else { console.log("User exists") }
+
         res.status(200).send(result)
     } catch (err) {
         res.status(400).send(err)
@@ -68,5 +84,15 @@ const handleRefreshToken = (req, res) => {
     }
 }
 
-module.exports = { logIn, handleCallback, getDetails, handleRefreshToken };
+const getPlaylists = async (req, res) => {
+    try {
+        const result = await spotifyApi.getUserPlaylists()
+
+        res.status(200).send(result.body.items)
+    } catch (err) {
+        res.status(500).send(err)
+    }
+}
+
+module.exports = { logIn, handleCallback, getDetails, handleRefreshToken, getPlaylists };
 module.exports.spotifyApi = spotifyApi;
