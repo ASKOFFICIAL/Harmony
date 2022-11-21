@@ -1,16 +1,22 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import "./Playlist.css";
 import Search_icon from "./Search_icon.svg";
-import Navbar from "../Navbar/Navbar";
 
-import { useLogin } from '../utils/LoginContext';
+import axiosInstance from "../utils/axiosInstance";
 
 const Playlist = () => {
-  const { data } = useLogin();
+  const [playlists, setPlaylists] = useState()
+
+  useEffect(() => {
+    axiosInstance.get('/user/playlists').then((res) => {
+      console.log(res)
+    })
+    
+  }, [])
 
   return (
     <div className="playlist">
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="searchbar">
         <form>
           <label>
@@ -30,13 +36,15 @@ const Playlist = () => {
             </tr>
           </thead>
           <tbody>
-            {data && data.items.map(playlist => {
-              <tr className="contents">
-                <td>{playlist.id}</td>
-                <td>{playlist.name}</td>
-                <td>{playlist.owner.display_name}</td>
-                {/* <td>{playlist.}</td> */}
-              </tr>
+            {playlists && playlists.map(playlist => {
+              return(
+                <tr className="contents">
+                  <td>{playlist.id}</td>
+                  <td>{playlist.name}</td>
+                  <td>{playlist.owner.display_name}</td>
+                  {/* <td>{playlist.}</td> */}
+                </tr>
+              )
             })}
           </tbody>
         </table>

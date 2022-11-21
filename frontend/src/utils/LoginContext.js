@@ -7,8 +7,8 @@ const LoginContext = createContext({
     setLoggedIn: () => {},
     data: null,
     setData: () => {},
-    currentSong: null,
-    setCurrentSong: () => {},
+    songData: null,
+    setSongData: () => {},
     accessToken: null
 });
 
@@ -17,7 +17,7 @@ export const useLogin = () => useContext(LoginContext);
 const LoginProvider = ({ code, children }) => {
     const [loggedIn, setLoggedIn] = useState(false);
     const [data, setData] = useState({});
-    const [currentSong, setCurrentSong] = useState();
+    const [songData, setSongData] = useState([]);
     const [accessToken, setAccessToken] = useState();
     const [refreshToken, setRefreshToken] = useState();
     const [expiresIn, setExpiresIn] = useState();
@@ -25,44 +25,31 @@ const LoginProvider = ({ code, children }) => {
     useEffect(() => {
         const handleLogin = async () => {
             await axiosInstance.post('/user/callback', { code }).then(async (res) => {
-                setAccessToken(res.data.access_token)
-                setRefreshToken(res.data.refresh_token)
                 setExpiresIn(res.data.expires_in)
-
+                
                 await axiosInstance('/user/details')
-                    .then((res) => {
+                .then((res) => {
+                        setAccessToken(res.data.access_token)
+                        setRefreshToken(res.data.refresh_token)
                         setData(res.data)
+                        console.log(res.data)
                         setLoggedIn(true)
                     })
                     .catch(() => { window.location = '/' });
             })
-            .catch(() => { window.location = '/' });
+            .catch((err) => { console.log(err)
+                window.location = '/' });
         }
 
         handleLogin();
     }, [code])
-
+    
     useEffect(() => {
-        window.history.pushState({}, null, "/userhome")
+        if (accessToken) window.history.pushState({}, null, "/userhome")
     }, [loggedIn])
 
-    // useEffect(() => {
-    //     if (!refreshToken || !expiresIn) return;
-
-    //     const timeout = setTimeout(async () => {
-    //         await axiosInstance.post('/user/refresh').then(async (res) => {
-    //             console.log(res.data.access_token)
-    //             setAccessToken(res.data.access_token)
-    //             // setExpiresIn(res.data.expires_in)
-    //             setExpiresIn(65)
-    //         })
-    //     }, (expiresIn - 60) * 1000)
-
-    //     return () => clearTimeout(timeout)
-    // }, [refreshToken, expiresIn])
-
     return (
-        <LoginContext.Provider value={{ loggedIn, setLoggedIn, data, setData, accessToken }}>
+        <LoginContext.Provider value={{ loggedIn, setLoggedIn, data, setData, accessToken, songData, setSongData }}>
             {children}
         </LoginContext.Provider>
     );

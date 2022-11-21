@@ -6,7 +6,10 @@ import "./Navbar.css";
 
 const Navbar = () => {
     const { loggedIn, setLoggedIn, data } = useLogin();
-    const logOut = () => {};
+    const logOut = () => {
+        setLoggedIn(false);
+        window.location = '/';
+    };
 
     const logIn = () => {
         axiosInstance.get("/user/login").then((res) => {
@@ -31,14 +34,17 @@ const Navbar = () => {
                 <ul>
                     {loggedIn ? (
                         <>
-                            <li><Link to="/userhome">Home</Link></li>
-                            <li><Link to="/playlists">Playlists</Link></li>
+                            <li><Link to='/'>Home</Link></li>
+                            {/* <li><Link to='/playlists'>Playlists</Link></li> */}
                             <li>
                                 <img
                                     // src="/images/Harmony_logo.png"
                                     src={data.images[0].url}
                                     className="profile-pic"
                                     width="40"
+                                    onClick={() => {
+                                        logOut();
+                                    }}
                                 />
                             </li>
                         </>

@@ -1,79 +1,60 @@
 import "./UserHome.css";
-import { useState, useEffect, useCallback } from 'react'
-import { Container, Grid, Typography, Box, Paper, Fab, Slide, Slider } from "@mui/material";
-import { PlayArrow, Pause, SkipNext, SkipPrevious, VolumeUp, Repeat, Shuffle, ArrowDropUp, ArrowDropDown, ConstructionOutlined, GpsFixed } from "@mui/icons-material";
-import Navbar from '../Navbar/Navbar';
+import { Grid, Typography, Button } from "@mui/material";
 import axiosInstance from '../utils/axiosInstance';
 import { BounceLoader } from 'react-spinners';
 import { useLogin } from '../utils/LoginContext';
-import { Link } from 'react-router-dom'
 import SpotifyPlayer from 'react-spotify-web-playback';
-// import { WebPlaybackSDK, useSpotifyPlayer, usePlayerDevice } from 'react-spotify-web-playback-sdk'; 
+
 
 const UserHome = () => {
-  // const [userData, setUserData] = useState();
-  const { loggedIn, data, accessToken } = useLogin();
-  const [isStart, setIsStart] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(true);
-  // const [displayVolumeSlider, setDisplayVolumeSlider] = useState(false);
-  // const [volume, setVolume] = useState(30);
-  const [displayPlaylist, setDisplayPlaylist] = useState(false)
-  // const [isLoading, setIsLoading] = useState(false)
+  const { loggedIn, data, accessToken, songData, setSongData } = useLogin();
 
-  // useEffect(() => {
-    // axiosInstance('/user/details').then((res) => {
-      // setUserData(res.data)
-      // setData(res.data)
-    // })
-  // }, [setData])
-  
-  // useEffect(() => {
-    // setTimeout(() => {
-      // setIsLoading(false)
-    //   setLoggedIn(true)
-    //   console.log(data)
-      
-      // console.log(data)
-      // console.log(userData)
-      // {userData.items.map(playlist => {
-      //   console.log(playlist.images[0].url)
-      // })}
-    // }, 3000)
-  // }, [data, setLoggedIn])
-
-  const toggleStart = () => { setIsStart(!isStart) }
-  const togglePlay = () => { setIsPlaying(!isPlaying) }
-  const toggleDisplayPlaylist = () => { setDisplayPlaylist(!displayPlaylist) }
-  // const toggleDisplayVolumeSlider = () => { setDisplayVolumeSlider(!displayVolumeSlider) }
-  // const handleChange = (event, newVolume) => { setVolume(newVolume) }
+  // const toggleStart = () => { setIsStart(!isStart) }
+  const togglePlay = (e) => {
+    // console.log(e.currentTarget.id)
+    setSongData(e.currentTarget.id)
+   }
+  // const toggleDisplayPlaylist = () => { setDisplayPlaylist(!displayPlaylist) }
 
   // Mood Graph Script
   var click=0;
+  var coords = {}
 
   const handleClick = (e) => {
     var rect = e.target.getBoundingClientRect();
     var x = e.clientX - rect.left; //x position within the element.
     var y = e.clientY - rect.top;  //y position within the element.
-      if (click==0){
+
+    if (click == 0){
       console.log("Left? : " + x + " ; Top? : " + y + ".");
-        click=1
-        document.getElementById('startpoint').style.display="block"
-        document.getElementById('startpoint').style.top=y+"px"
-        document.getElementById('startpoint').style.left=x+"px"
-      }
-      else{
-        console.log("Gay Left? : " + x + " ; Top? : " + y + ".");
-        click=0
-        document.getElementById('endpoint').style.display="block"
-        document.getElementById('endpoint').style.top=y+"px"
-        document.getElementById('endpoint').style.left=x+"px"
-      }
+      click=1
+      document.getElementById('startpoint').style.display="block"
+      document.getElementById('startpoint').style.top=y+"px"
+      document.getElementById('startpoint').style.left=x+"px"
+      coords["startCoords"] = [x/300, y/300]
+    } else {
+      console.log("Left? : " + x + " ; Top? : " + y + ".");
+      click=0
+      document.getElementById('endpoint').style.display="block"
+      document.getElementById('endpoint').style.top=y+"px"
+      document.getElementById('endpoint').style.left=x+"px"
+      coords["endCoords"] = [x/300, y/300]
+    }
+  }
+
+  const generatePlaylists = () => {
+    axiosInstance.post('/song/generate', { coords, uid: data.id }).then((res) => {
+      console.log(data.id)
+      setSongData(res.data)
+      document.getElementById('startpoint').style.display="none"
+      document.getElementById('endpoint').style.display="none"
+    })
   }
 
   return (
     <>
     {!loggedIn ? 
-      <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", margin: "0px", padding: "0"}}>
+      <div style={{display: "flex", justifyContent: "center", width: "100%", alignItems: "center", height: "100vh"}}>
         <BounceLoader color="#36d7b7"/>
       </div>
       :
@@ -88,7 +69,7 @@ const UserHome = () => {
             <Typography variant="h6" fontWeight="bold">
               Your Recent Top Track
             </Typography>
-              <img src={data.topTrack.album.images[1].url} alt="Spotify thumbnail" width="150px" height="150px" />
+              <img className="playlist-thumbnail" id={data.topTrack.uri} src={data.topTrack.album.images[1].url} alt="Spotify thumbnail" width="150px" height="150px" onClick={togglePlay} />
           </Grid>
         </Grid>
 
@@ -99,9 +80,9 @@ const UserHome = () => {
             </Typography>
           </Grid>
           {data.items.map((playlist) => {
-            console.log(playlist)
+            // console.log(playlist)
             return (
-              <Grid item xs={3} pl={7}>
+              <Grid item xs={3} pl={7} id={playlist.uri} onClick={togglePlay}>
                 <img src={playlist.images[0].url} className="playlist-thumbnail" />
                 <h5 style={{padding: "0"}}>{playlist.name}</h5>
               </Grid>
@@ -116,74 +97,45 @@ const UserHome = () => {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <div style={{"textAlign": "center", "width": "100%", "display": "flex", "justifyContent": "center", "alignItems": "center"}}>
-              <a href="#">
-                <div className="graph-container" onClick={handleClick}>
-                  <div className="in-graph-container"  style={{"top":"-35px", "left":" 40%"}}><h3>Arousal</h3></div>
-                  <div className="in-graph-container" style={{"top":"41%", "left":"310px"}}><h3>Pleasure</h3></div>
-                  <div className="in-graph-container" style={{"top":"300px", "left":"35%"}}><h3>Sleepiness</h3></div>
-                  <div className="in-graph-container" style={{"top":"41%", "left":"-70px"}}><h3>Misery</h3></div>
-                  <div className="in-graph-container" style={{"top":"25px", "left":"10px"}}><h4>Distress</h4></div>
-                  <div className="in-graph-container" style={{"top":"25px", "left":"240px"}}><h4>Excitement</h4></div>
-                  <div className="in-graph-container" style={{"top":"235px", "left":"240px"}}><h4>Contentment</h4></div>
-                  <div className="in-graph-container" style={{"top":"235px", "left":"0px"}}><h4>Depression</h4></div>
-                  <div id="hor-line" className="in-graph-container"></div>
-                  <div id="ver-line" className="in-graph-container"></div>
-                  <div id="startpoint" className="in-graph-container"></div>
-                  <div id="endpoint" className="in-graph-container"></div>
-                </div>
-              </a>
-              {/* <div><input type="button" id="coordbutton" value="Send Coords" /></div> */}
+            <div style={{"textAlign": "center", "width": "100%", "display": "flex", "justifyContent": "center", "alignItems": "center", "flexDirection": "column"}}>
+              <div className="graph-container" onClick={handleClick}>
+                <div className="in-graph-container"  style={{"top":"-35px", "left":" 40%"}}><h3>Arousal</h3></div>
+                <div className="in-graph-container" style={{"top":"41%", "left":"310px"}}><h3>Pleasure</h3></div>
+                <div className="in-graph-container" style={{"top":"300px", "left":"35%"}}><h3>Sleepiness</h3></div>
+                <div className="in-graph-container" style={{"top":"41%", "left":"-70px"}}><h3>Misery</h3></div>
+                <div className="in-graph-container" style={{"top":"25px", "left":"10px"}}><h4>Distress</h4></div>
+                <div className="in-graph-container" style={{"top":"25px", "left":"240px"}}><h4>Excitement</h4></div>
+                <div className="in-graph-container" style={{"top":"235px", "left":"240px"}}><h4>Contentment</h4></div>
+                <div className="in-graph-container" style={{"top":"235px", "left":"0px"}}><h4>Depression</h4></div>
+                <div id="hor-line" className="in-graph-container"></div>
+                <div id="ver-line" className="in-graph-container"></div>
+                <div id="startpoint" className="in-graph-container"></div>
+                <div id="endpoint" className="in-graph-container"></div>
+              </div>
+              <Button variant="outlined" color="secondary" onClick={generatePlaylists} style={{marginTop: "100px"}}>Generate Playlist</Button>
             </div>
           </Grid>
         </Grid>
 
-
-        {/* <MyPlayer /> */}
-        {/* <Link to="/song"> */}
         <div id="play-controls">
-          <SpotifyPlayer
-            token={accessToken}
-            autoPlay
-            uris={["spotify:track:0fBSs3fRoh1yJcne77fdu9"]}
-            // id="play-controls"
-          />
-        </div>
-          {/* <div id="play-controls">
-            <div>
-              <SkipPrevious className="play-controls-icon" fontSize="large" />
-              {isPlaying
-              ? <Pause className="play-controls-icon" fontSize="large" onClick={ () => togglePlay() } />
-              : <PlayArrow className="play-controls-icon" fontSize="large" onClick={ () => togglePlay() } /> 
-              }
-              <SkipNext className="play-controls-icon" fontSize="large" />
-            </div>
-            <div id="play-controls-song">
-              {/* <Box id="play-controls-thumbnail" /> */}
-              {/* <img src="./images/spotify-sample-cover.png" alt="Spotify thumbnail" id="play-controls-thumbnail" />
-              <div>
-                <Typography variant="h5" >All I Want</Typography>
-                <Typography variant="p">Kodaline</Typography>
-              </div>
-            </div>
-            <div> */}
-              {/* {displayVolumeSlider
-              ? <Slider aria-label="volume" value={volume} onChange={handleChange} />
-              : <></>
-              }
-              <VolumeUp id="volume" className="play-controls-icon" fontSize="large"
-                onMouseEnter={ () => { toggleDisplayVolumeSlider() }}
-                onMouseLeave={ () => { toggleDisplayVolumeSlider() }}
-              /> */}
-              {/* <Repeat className="play-controls-icon" fontSize="large" />
-              <Shuffle className="play-controls-icon" fontSize="large" />
-              {displayPlaylist
-              ? <ArrowDropDown className="play-controls-icon" fontSize="large" onClick={ () => toggleDisplayPlaylist() } />
-              : <ArrowDropUp className="play-controls-icon" fontSize="large" onClick={ () => toggleDisplayPlaylist() } />
-              }
-            </div>
-          </div> */}
-        {/* </Link> */}
+        {songData.length != 0 ? 
+            <SpotifyPlayer
+              token={accessToken}
+              autoPlay
+              uris={songData}
+              styles={{
+                activeColor: '#fff',
+                bgColor: '#333',
+                color: '#fff',
+                loaderColor: '#fff',
+                sliderColor: '#1cb954',
+                trackArtistColor: '#ccc',
+                trackNameColor: '#fff',
+              }}
+            />
+        : <></> 
+        }
+      </div>
       </>
     }
     </>

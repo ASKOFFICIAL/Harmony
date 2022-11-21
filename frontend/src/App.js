@@ -2,7 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import Home from "./Home/Home"
-// import Song from "./Song/Song"
+import Song from "./Song/Song"
 // import Playlist from './Playlist/Playlist';
 import UserHome from './UserHome/UserHome';
 import LoginContext from './utils/LoginContext';
@@ -15,10 +15,18 @@ function App() {
     <>
     <Router>
       {code ? 
+      <>
         <LoginContext code={code}>
           <Navbar />
-          <UserHome />
+          <Routes>
+            <Route path='/*'>
+              <Route index element={<UserHome />}></Route>
+              {/* <Route path='playlists' element={<Playlist />}></Route> */}
+              <Route path='song' element={<Song />}></Route>
+            </Route>
+          </Routes>
         </LoginContext>
+      </>
         : <Home /> }
     </Router>
     </>
@@ -26,27 +34,3 @@ function App() {
 }
 
 export default App;
-
-
-// {/* <LoginContext> */}
-        // {/* <Router>
-          // <Routes> */}
-          // {
-            // code
-            // ? 
-              // <Navbar />
-            // <>
-              // {/* <UserHome /> */}
-            // {/* </> */}
-              // <Route exact path='/' element={<Home />} />
-              // :
-              // <Home />
-              // <>
-              //   <Route path='/song' element={<Song />} />
-              //   <Route path='/playlists' element={<Playlist />} />
-              //   <Route path='/userhome' element={<UserHome />} />
-              // </>
-          // }
-            // {/* </Routes>
-          // </Router> */}
-        // {/* </LoginContext> */}
